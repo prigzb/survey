@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="http://do.yunzhijia.com/pub/js/qingjs.js"></script>
+    <script src="//cdn.bootcss.com/js-cookie/latest/js.cookie.min.js"></script>
+    <script src="//cdn.bootcss.com/URI.js/1.18.1/URI.min.js"></script>
+    <!-- <script src="//cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script> -->
+    <script src="//cdn.bootcss.com/socket.io/1.6.0/socket.io.min.js"></script>
+    <script src="https://cdn.bootcss.com/extjs/3.4.1-1/adapter/ext/ext-base.js"></script>
+    <!--<script src="../javascripts/ext-all-debug.js"></script>-->
+    <script src="//res.wx.qq.com/mmbizwap/zh_CN/htmledition/js/vconsole/3.0.0/vconsole.min.js"></script>
+    <script src="https://cdn.bootcss.com/extjs/3.4.1-1/ext-all-debug.js"></script>
+    <link href="https://cdn.bootcss.com/extjs/3.4.1-1/resources/css/ext-all.css" rel="stylesheet">
+
+    <style type="text/css">
+    .center{text-align: center;}
+    .login-page {
+      width: 360px;
+      padding: 8% 0 0;
+      margin: auto;
+    }
+    .form {
+      position: relative;
+      z-index: 1;
+      background: #FFFFFF;
+      max-width: 360px;
+      margin: 0 auto 100px;
+      padding: 45px;
+      text-align: center;
+      box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    }
+    .form input {
+      font-family: "Roboto", sans-serif;
+      outline: 0;
+      background: #f2f2f2;
+      width: 100%;
+      border: 0;
+      margin: 0 0 15px;
+      padding: 15px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+    .form button {
+      font-family: "Microsoft YaHei","Roboto", sans-serif;
+      text-transform: uppercase;
+      outline: 0;
+      background: #4CAF50;
+      width: 100%;
+      border: 0;
+      padding: 15px;
+      color: #FFFFFF;
+      font-size: 14px;
+      -webkit-transition: all 0.3 ease;
+      transition: all 0.3 ease;
+      cursor: pointer;
+    }
+    .form button:hover,.form button:active,.form button:focus {
+      background: #43A047;
+    }
+    .form .message {
+      margin: 15px 0 0;
+      color: #b3b3b3;
+      font-size: 12px;
+    }
+    .form .message a {
+      color: #4CAF50;
+      text-decoration: none;
+    }
+    .form .register-form {
+      display: none;
+    }
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+    .container:before, .container:after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+    .container .info {
+      margin: 50px auto;
+      text-align: center;
+    }
+    .container .info h1 {
+      margin: 0 0 15px;
+      padding: 0;
+      font-size: 36px;
+      font-weight: 300;
+      color: #1a1a1a;
+    }
+    .container .info span {
+      color: #4d4d4d;
+      font-size: 12px;
+    }
+    .container .info span a {
+      color: #000000;
+      text-decoration: none;
+    }
+    .container .info span .fa {
+      color: #EF3B3A;
+    }
+    body {
+      background: #76b852; /* fallback for old browsers */
+      background: -webkit-linear-gradient(right, #76b852, #8DC26F);
+      background: -moz-linear-gradient(right, #76b852, #8DC26F);
+      background: -o-linear-gradient(right, #76b852, #8DC26F);
+      background: linear-gradient(to left, #76b852, #8DC26F);
+      font-family: "Roboto", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;      
+    }
+    .shake_effect{
+        -webkit-animation-name: shake;
+        animation-name: shake;
+        -webkit-animation-duration: 1s;
+        animation-duration: 1s;
+    }
+    @-webkit-keyframes shake {
+      from, to {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+      }
+
+      10%, 30%, 50%, 70%, 90% {
+        -webkit-transform: translate3d(-10px, 0, 0);
+        transform: translate3d(-10px, 0, 0);
+      }
+
+      20%, 40%, 60%, 80% {
+        -webkit-transform: translate3d(10px, 0, 0);
+        transform: translate3d(10px, 0, 0);
+      }
+    }
+
+    @keyframes shake {
+      from, to {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+      }
+
+      10%, 30%, 50%, 70%, 90% {
+        -webkit-transform: translate3d(-10px, 0, 0);
+        transform: translate3d(-10px, 0, 0);
+      }
+
+      20%, 40%, 60%, 80% {
+        -webkit-transform: translate3d(10px, 0, 0);
+        transform: translate3d(10px, 0, 0);
+      }
+    }
+</style>
+</head>
+<body>
+
+<div class="htmleaf-container">
+    <div id="wrapper" class="login-page">
+      <div id="login_form" class="form">
+        <form class="login-form">
+          <!-- <input type="text" placeholder="用户名" id="user_name"/> -->
+          <input type="password" placeholder="密码" id="password"/>
+          <button id="login">登　录</button>
+        </form>
+      </div>
+    </div>
+</div>
+<script type="text/javascript">
+    
+  function check_login(){
+  //  var name=$("#user_name").val();
+   var pass=$("#password").val();
+  //  if(name && pass){
+   if(pass){
+//alert(3);
+    $.ajax({
+            url:"http://61.136.222.249:8888/",
+            type:"GET",
+            dataType:"json",
+            async:false,
+            success:function(data){
+                console.log(data)
+                $(document).ready(function(){
+                  XuntongJSBridge.call('setWebViewTitle',{'title':'问卷调查'},null);
+                  try{
+                  //XuntongJSBridge.call('hideOptionMenu');
+                  XuntongJSBridge.call('getPersonInfo',{}, function(result){
+                    if(result.success){
+                      //alert("用户数据："+JSON.stringify(result));
+                      var userName=result.data.name;
+                      
+                        //var userName=email.substring(0,email.indexOf('@'));
+                    // var openId=result.data.openId;
+                    // var photoUrl=result.data.photoUrl;
+                    // var eid=result.data.eid;
+                    // var companyName=result.data.companyName;
+                        // $("#username").html(userName);
+                        // $("#openId").html(openId);
+                        // $("#photoUrl").html(photoUrl);
+                        // $("#eid").html(eid);
+                        // $("#companyName").html(companyName);
+                      
+                        var uri = new URI("https://www.wjx.cn/jq/25342849.aspx");
+                       // if (name.match(data.admin[0].type) && pass==data.pwd){
+                       if (pass==data.pwd){
+                       uri.addQuery('sojumpparm', userName);
+                       //uri.addQuery('repeat', 0);
+                       window.location = uri.toString();
+                       }else{
+                           alert("请检查用户名或密码是否错误")
+                       }
+                    }else{
+                      alert('获取用户信息失败！');
+                    }
+                  });
+                }catch(e){
+                  alert(5);
+                }
+                
+              });
+          },
+          error:function(){
+              alert("获取数据失败");
+          }
+   })
+   // if(name=="sc.chinaz.com" && pass=="sc.chinaz.com"){
+   //    alert("登录成功！");
+   //    $("#user_name").val("");
+   //    $("#password").val("");
+   // } else{
+   //    $("#login_form").removeClass('shake_effect');  
+   //    setTimeout(function(){
+   //     $("#login_form").addClass('shake_effect')
+   //    },1);
+   // }
+  }
+}
+ // init vConsole
+ (function(){
+	  // var uri = new URI(window.location.href);
+    // var query = uri.search(true);
+    // if(!query.vConsole)return;
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  })()
+$(function(){
+    $("#login").click(function(){
+        check_login();
+        return false;
+    })
+    // $('.message a').click(function () {
+    //     $('form').animate({
+    //         height: 'toggle',
+    //         opacity: 'toggle'
+    //     }, 'slow');
+    // });
+})
+</script>
+</body>
+</html>
